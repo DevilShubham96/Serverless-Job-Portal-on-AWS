@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Job Portal</title>
+</head>
+<body>
+
+<h1>Job Portal</h1>
+
+<h2>Post Job</h2>
+<input id="title" placeholder="Job Title"><br>
+<input id="company" placeholder="Company"><br>
+<input id="location" placeholder="Location"><br>
+<textarea id="description" placeholder="Description"></textarea><br>
+<button onclick="postJob()">Post Job</button>
+
+<h2>Available Jobs</h2>
+<button onclick="getJobs()">Load Jobs</button>
+<ul id="jobs"></ul>
+
+<script>
+const apiUrl = "PASTE_API_GATEWAY_URL_HERE";
+
+function postJob() {
+fetch(apiUrl,{
+method:"POST",
+body:JSON.stringify({
+title:title.value,
+company:company.value,
+location:location.value,
+description:description.value
+})
+}).then(()=>alert("Job Posted"));
+}
+
+function getJobs() {
+fetch(apiUrl)
+.then(res=>res.json())
+.then(data=>{
+jobs.innerHTML="";
+data.forEach(j=>{
+jobs.innerHTML+=`<li>${j.title} - ${j.company}</li>`;
+});
+});
+}
+</script>
+
+</body>
+</html>
